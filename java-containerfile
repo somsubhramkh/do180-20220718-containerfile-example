@@ -1,0 +1,8 @@
+FROM ubi7/ubi:7.7
+
+MAINTAINER Somsubhra Mukherjee somukher@redhat.com
+
+WORKDIR /opt/jboss
+
+RUN yum install -y java-1.8.0-openjdk.x86_64 && \
+    yum clean all
