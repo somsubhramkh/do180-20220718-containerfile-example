@@ -1,0 +1,20 @@
+FROM java-image:1.8.0
+
+MAINTAINER Somsubhra Mukherjee somukher@redhat.com
+
+COPY ./jboss-eap-7.2 /opt/jboss/jboss-eap-7.2/
+
+RUN groupadd jboss && \
+    useradd -r -g jboss jboss && \
+    chown -R jboss:jboss /opt/jboss/jboss-eap-7.2
+
+USER jboss
+
+RUN /opt/jboss/jboss-eap-7.2/bin/add-user.sh admin admin@123 --silent
+
+# Public Port
+EXPOSE 8080
+# Management Port
+EXPOSE 9990
+
+CMD ["sh","/opt/jboss/jboss-eap-7.2/bin/standalone.sh","-b","0.0.0.0","-bmanagement","0.0.0.0"]
